@@ -20,17 +20,17 @@ machines:
       - nmap
     shell_scripts:
       - master_scripts/master_script.sh
-    synced_folders:
-      - src: ./master.d
-        dest: /etc/salt/master.d
-        create: true
-        owner: root
-        group: root
-      - src: ./salt
-        dest: /srv/salt
-        create: true
     forwarded_ports:
       - guest: 5240
         host: 5240
+    # synced_folders:
+    #   - src: ./master.d
+    #     dest: /etc/salt/master.d
+    #     create: true
+    #     owner: root
+    #     group: root
+    #   - src: ./salt
+    #     dest: /srv/salt
+    #     create: true
     #   - src: ./pillar
     #     dest: /srv/pillar

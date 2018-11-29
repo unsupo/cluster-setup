@@ -1,3 +1,9 @@
+##
+## This script just sets up the vagrant box how the raspbery pi is set up
+## ie with user pi password raspberry which can sudo without a password
+## also fixes some old ubuntu repo issues
+##
+
 sudo sed -i 's/archive.ubuntu|in.archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu/' /etc/apt/sources.list
 sudo apt-get update
 

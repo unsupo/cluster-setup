@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 sudo apt-get update \
   && sudo apt install maas \
   && sudo maas init \

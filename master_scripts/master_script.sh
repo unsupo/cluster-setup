@@ -10,6 +10,11 @@
 ## to simply set up all machines.  However i use this vagrant set up to
 ## test the script.
 ##
+## goal do salt from gitfs
+## Ideally log into master run git clone https://github.com/unsupo/cluster-setup.git
+## which would just have this script and master_overrides.conf
+## Then this script would set everything else up calling the salt states
+## from gitfs using another repo https://github.com/unsupo/cluster-setup-salt.git
 
 # install salt-master
 if [ ! -e 'install_salt.sh' ]; then
