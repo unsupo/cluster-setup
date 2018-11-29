@@ -1,0 +1,83 @@
+##
+## This script sets up a master node and installs salt master and minion.
+## Then it using nmap to find other connected hosts and sets up a salt-ssh
+## roster file for them.  Then it uses salt-ssh to apply the minion state
+## which installs the salt minion on each host found.  Lastly it accepts
+## the found minion keys
+##
+## In vagrant this is used to test the script, but isn't needed to set up
+## a group of machines like this, instead you can use the all_script.sh
+## to simply set up all machines.  However i use this vagrant set up to
+## test the script.
+##
+
+# install salt-master
+if [ ! -e 'install_salt.sh' ]; then
+  curl -L https://bootstrap.saltstack.com -o install_salt.sh
+  sudo sh install_salt.sh -P -M
+  if [ "$?" -ne 0 ]; then
+    sudo apt-get install python-tornado -y
+    sudo sh install_salt.sh -P -M
+  fi
+fi
+
+iprange=192.168.50.0
+# provision salt-ssh using nmap to get ip
+myips=`hostname -I`
+foundips=`nmap -sn -T5 $iprange/24 -oG - | awk '/Up$/{print $2}'`
+name=raspbery-pi
+k=0
+f=test.file
+kdir=/etc/salt/pki/master/ssh/
+rfile="$kdir/salt-ssh.rsa"
+mkdir -p $kdir
+test -e $rfile || yes no | ssh-keygen -t rsa -f $rfile -N ''
+kfile="$rfile.pub"
+echo "
+#!/bin/sh
+echo 'raspberry'
+" > t
+chmod +x ./t
+rm -f $f
+# TODO check for existing conected minions and not create a salt-ssh roster for them
+for i in $foundips; do
+  t=0
+  for j in $myips; do
+    if [ "$i" == "$j" ]; then
+      t=1
+    fi
+  done
+  if [ "$t" -eq 1 ]; then continue; fi
+  if [ ! -f /root/.ssh/known_hosts ]; then
+    mkdir /root/.ssh;
+    chmod 0700 .ssh
+    touch /root/.ssh/known_hosts
+  fi
+  ssh-keyscan -t rsa,dsa $i 2>&1 | sort -u - /root/.ssh/known_hosts > /root/.ssh/tmp_hosts
+  mv /root/.ssh/tmp_hosts /root/.ssh/known_hosts
+  export DISPLAY=:0; SSH_ASKPASS='./t' setsid -w timeout 5 ssh-copy-id -i $kfile pi@$i
+  if [ "$?" -ne 0 ]; then continue; fi
+  echo "
+$name-$k:
+  host: $i
+  user: pi
+  passwd: raspbery
+  sudo: True
+  priv: $rfile
+" >> $f
+  k=$(($k+1))
+done
+rm -f ./t
+# now all hosts have been found cat test.file into /etc/salt/roster
+mv $f /etc/salt/roster
+
+# all hosts exist in salt-ssh, so install the salt-minion on them and set up there minion id
+# salt-ssh -i
+salt-ssh '*' state.apply salt.minion
+
+# salt-key -A -y
+salt-key -A -y
+
+# lastly apply a highstate to accepted minions, this should set everything else up
+# from remaining master setup to remaining minions setups
+salt '*' state.highstate
