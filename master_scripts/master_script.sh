@@ -16,8 +16,14 @@
 ## Then this script would set everything else up calling the salt states
 ## from gitfs using another repo https://github.com/unsupo/cluster-setup-salt.git
 
+
 # install salt-master
 if [ ! -e 'install_salt.sh' ]; then
+    # move the master_overrides.conf to /etc/salt/master.d/ and restart master, might be able to do this before installation of master to prevent restart
+    mkdir -p /etc/salt/master.d
+    mv ./master_scripts/master_overrides.conf /etc/salt/master.d/master_overrides.conf
+    #service salt-master restart
+
   curl -L https://bootstrap.saltstack.com -o install_salt.sh
   sudo sh install_salt.sh -P -M
   if [ "$?" -ne 0 ]; then

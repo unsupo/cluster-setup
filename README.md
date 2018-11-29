@@ -18,4 +18,8 @@ TODO
 - figure a way to git clone this without taking the vagrant stuff.  
     Vagrant is good for testing (so is needed in this repo), but not every is 
     needed on real server
+    - probably `git clone --single-branch -b branch host:/dir.git`
+        
+        Set vagrant on one branch and non vagrant on another 
+
 - check for existing conected minions and not create a salt-ssh roster for them in the master_script.sh
