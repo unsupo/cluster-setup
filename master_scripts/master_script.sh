@@ -18,10 +18,9 @@
 
 # install salt-master
 if [ ! -e 'install_salt.sh' ]; then
-    # move the master_overrides.conf to /etc/salt/master.d/ and restart master, might be able to do this before installation of master to prevent restart
+    # move the master_overrides.conf to /etc/salt/master.d/
     mkdir -p /etc/salt/master.d
     mv ./master.d/master_overrides.conf /etc/salt/master.d/master_overrides.conf
-    #service salt-master restart
 
   curl -L https://bootstrap.saltstack.com -o install_salt.sh
   sudo sh install_salt.sh -P -M
@@ -29,6 +28,9 @@ if [ ! -e 'install_salt.sh' ]; then
     sudo apt-get install python-tornado -y
     sudo sh install_salt.sh -P -M
   fi
+
+  # The following for gitfs setup
+  apt-get install python-pygit2
 fi
 
 iprange=192.168.50.0

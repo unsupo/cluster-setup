@@ -14,7 +14,7 @@ each of the found servers.  Lastly it will apply a highstate to all servers
 
 On master server run:
 
-`git clone --single-branch -b master-setup https://github.com/unsupo/cluster-setup.git && cd cluster-setup && sh /master_scripts/master_script.sh`
+`git clone --single-branch -b master-setup https://github.com/unsupo/cluster-setup.git && cd cluster-setup && sudo sh /master_scripts/master_script.sh`
 
 TODO  
 -----
