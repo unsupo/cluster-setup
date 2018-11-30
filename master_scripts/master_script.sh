@@ -18,10 +18,9 @@
 
 # install salt-master
 if [ ! -e 'install_salt.sh' ]; then
-    # move the master_overrides.conf to /etc/salt/master.d/ and restart master, might be able to do this before installation of master to prevent restart
+    # move the master_overrides.conf to /etc/salt/master.d/
     mkdir -p /etc/salt/master.d
     mv ./master.d/master_overrides.conf /etc/salt/master.d/master_overrides.conf
-    #service salt-master restart
 
   curl -L https://bootstrap.saltstack.com -o install_salt.sh
   sudo sh install_salt.sh -P -M
@@ -29,6 +28,9 @@ if [ ! -e 'install_salt.sh' ]; then
     sudo apt-get install python-tornado -y
     sudo sh install_salt.sh -P -M
   fi
+
+  # The following for gitfs setup
+  apt-get install python-pygit2
 fi
 
 iprange=192.168.50.0
@@ -83,7 +85,8 @@ mv $f /etc/salt/roster
 
 # all hosts exist in salt-ssh, so install the salt-minion on them and set up there minion id
 # salt-ssh -i
-salt-ssh '*' state.apply salt.minion
+# can't ssh-salt '*' state.apply salt.minion because https://github.com/saltstack/salt/issues/21370
+salt-ssh '*' state.apply salt-bootstraper.minion
 
 # salt-key -A -y
 salt-key -A -y
