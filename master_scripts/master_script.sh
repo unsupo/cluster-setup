@@ -85,7 +85,8 @@ mv $f /etc/salt/roster
 
 # all hosts exist in salt-ssh, so install the salt-minion on them and set up there minion id
 # salt-ssh -i
-salt-ssh '*' state.apply salt.minion
+# can't ssh-salt '*' state.apply salt.minion because https://github.com/saltstack/salt/issues/21370
+salt-ssh '*' state.apply salt-bootstraper.minion
 
 # salt-key -A -y
 salt-key -A -y
