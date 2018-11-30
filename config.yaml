@@ -19,7 +19,7 @@ machines:
       - salt-ssh
       - nmap
     shell_scripts:
-      - master_scripts/master_script.sh
+      - master_scripts/vagrant_master_init.sh
     forwarded_ports:
       - guest: 5240
         host: 5240
