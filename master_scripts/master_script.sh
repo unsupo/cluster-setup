@@ -30,7 +30,8 @@ if [ ! -e 'install_salt.sh' ]; then
   fi
 
   # The following for gitfs setup
-  apt-get install python-pygit2
+  apt-get install python-pygit2 -y
+  apt-get install salt-ssh -y
 fi
 
 iprange=$1
