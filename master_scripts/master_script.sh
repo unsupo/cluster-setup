@@ -33,7 +33,7 @@ if [ ! -e 'install_salt.sh' ]; then
   apt-get install python-pygit2
 fi
 
-iprange=192.168.50.0
+iprange=$1
 # provision salt-ssh using nmap to get ip
 myips=`hostname -I`
 foundips=`nmap -sn -T5 $iprange/24 -oG - | awk '/Up$/{print $2}'`
