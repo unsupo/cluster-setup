@@ -1,7 +1,7 @@
 ---
 defaults:
   version: '2018.3'
-net_ip: 192.168.50
+net_ip: 10.0.0
 box: bento/ubuntu-16.04 #ubuntu/trusty64
 shell_scripts:
   - all_script.sh
