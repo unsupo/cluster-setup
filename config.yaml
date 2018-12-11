@@ -10,7 +10,8 @@ machines:
     ip: '.100'
   - name: ubuntu-minion-02
     ip: '.101'
-  - name: salt
+  - name: master
+    box: ubuntu-server
     # boxurl: http://tmxyum.tmx.com/yum/images/target/vb/mac/rhel-7.5.virtualbox.box
     ip: '.10'
     mem: 2048
