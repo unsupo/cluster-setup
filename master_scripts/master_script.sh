@@ -56,7 +56,7 @@ rm -f $f
 for i in $foundips; do
   t=0
   for j in $myips; do
-    if [ "$i" == "$j" ]; then
+    if [ "$i" = "$j" ]; then
       t=1
     fi
   done
