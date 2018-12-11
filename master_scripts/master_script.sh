@@ -56,7 +56,7 @@ rm -f $f
 for i in $foundips; do
   t=0
   for j in $myips; do
-    if [ "$i" == "$j" ]; then
+    if [ "$i" = "$j" ]; then
       t=1
     fi
   done
@@ -87,6 +87,7 @@ mv $f /etc/salt/roster
 # all hosts exist in salt-ssh, so install the salt-minion on them and set up there minion id
 # salt-ssh -i
 # can't ssh-salt '*' state.apply salt.minion because https://github.com/saltstack/salt/issues/21370
+salt-ssh '*' cmd.run "echo `hostname -I | awk '{print $1}'` > /root/master_ip"
 salt-ssh '*' state.apply salt-bootstraper.minion
 
 # salt-key -A -y
