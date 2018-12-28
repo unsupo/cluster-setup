@@ -74,7 +74,7 @@ for i in $foundips; do
 $name-$k:
   host: $i
   user: pi
-  passwd: raspbery
+  passwd: raspberry
   sudo: True
   priv: $rfile
 " >> $f
