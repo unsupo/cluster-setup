@@ -38,7 +38,7 @@ iprange=$1
 # provision salt-ssh using nmap to get ip
 myips=`hostname -I`
 foundips=`nmap -sn -T5 $iprange/24 -oG - | awk '/Up$/{print $2}'`
-name=raspbery-pi
+name=raspberry-pi
 k=0
 f=test.file
 kdir=/etc/salt/pki/master/ssh/
