@@ -17,11 +17,16 @@ On master server run:
 `git clone --single-branch -b master-setup https://github.com/unsupo/cluster-setup.git && \
             cd cluster-setup && sudo sh master_scripts/master_script.sh 10.0.0.0`
 
+Completed
+----
+- Add gitfs to point to [my salt states](https://github.com/unsupo/cluster-setup-salt.git)
+
+
 TODO  
 -----
-- Add gitfs to point to [my salt states](https://github.com/unsupo/cluster-setup-salt.git)
 - figure a way to git clone this without taking the vagrant stuff.  
     Vagrant is good for testing (so is needed in this repo), but not every is 
     needed on real server.
     Current solution is different branch and only pull master-server branch on master server
 - check for existing conected minions and not create a salt-ssh roster for them in the master_script.sh
+    Currently it will add it to the roster but do nothing
