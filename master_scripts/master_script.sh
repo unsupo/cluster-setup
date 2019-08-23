@@ -91,6 +91,7 @@ salt-ssh '*' cmd.run "echo `hostname -I | awk '{print $1}'` > /root/master_ip"
 salt-ssh '*' state.apply salt-bootstraper.minion
 
 # salt-key -A -y
+salt-key -d -y 'raspberry-pi-*'
 salt-key -A -y
 
 # lastly apply a highstate to accepted minions, this should set everything else up
